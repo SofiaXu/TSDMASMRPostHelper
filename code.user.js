@@ -14,7 +14,7 @@
 
 (function() {
     'use strict';
-    let titleTemplate = (rjCode, title, releaseDate, resolution, fileFormat) => `[DLsite自购][${rjCode}][${releaseDate}]${title}[${resolution}][${fileFormat}] `;
+    let titleTemplate = (rjCode, title, releaseDate, resolution, fileFormat) => `[DLsite自购][${rjCode}][${releaseDate}]${title}[${resolution}][${fileFormat}]`;
     let bodyTemplate = (rjCode, coverUrl, title, circle, cv, releaseDate, resolution, fileFormat, tags, fileSize, introduction, trackList) => `[free]
 购买原地址 Original Site：[url]https://www.dlsite.com/maniax/work/=/product_id/${rjCode}.html[/url]
 封面 Cover：
