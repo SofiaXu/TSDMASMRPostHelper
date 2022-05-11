@@ -98,7 +98,7 @@ Rules of Reshare
         "zh-tw": "YYYY年MM月DD日"
     };
     genPostButton.addEventListener("click", () => {
-        if (! /(RJ)?\d{6}/i.test(rjBox.value)) {
+        if (! /RJ\d{6}/i.test(rjBox.value)) {
             alert("未输入 RJ 号！");
             return;
         }
