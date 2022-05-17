@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         天使动漫 ASMR 版发帖辅助
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.1
 // @description  天使动漫 ASMR 版发帖辅助
 // @author       Aoba Xu
 // @match        https://www.tsdm39.net/forum.php?mod=post&action=newthread&fid=581
@@ -15,7 +15,7 @@
 (function() {
     'use strict';
     let titleTemplate = (rjCode, title, releaseDate, resolution, fileFormat) => `[DLsite自购][${rjCode}][${releaseDate}]${title}[${resolution}][${fileFormat}]`;
-    let bodyTemplate = (rjCode, coverUrl, title, circle, cv, releaseDate, resolution, fileFormat, tags, fileSize, introduction, trackList) => `[free]
+    let bodyTemplate = (rjCode, coverUrl, title, circle, cv, releaseDate, resolution, fileFormat, tags, fileSize, introduction, trackList, selfCertUrl) => `[free]
 购买原地址 Original Site：[url]https://www.dlsite.com/maniax/work/=/product_id/${rjCode}.html[/url]
 封面 Cover：
 [img]${coverUrl}[/img]
@@ -52,13 +52,23 @@ Rules of Reshare
 
 [/free]
 下载链接：
+
+自购证明：
+[hide=999999999]
+[img]${selfCertUrl === undefined || selfCertUrl === null ? "" : selfCertUrl}[/img]
+[/hide]
 `;
-    document.getElementById("postbox").insertAdjacentHTML("afterbegin", `<div class="pbt cl"><div class="z"><span><input type="text" id="rj-number" style="min-width: " class="px" title="RJ号" placeholder="RJ号"/></span></div><div class="z"><span><input type="text" id="resolution" class="px" title="解析度，格式：96kHz/24bit 或 320kbps" placeholder="解析度，格式：96kHz/24bit（无损） 或 320kbps（有损）"/></span></div><button type="button" class="pn pnc" id="gen-post">生成</button></div>`);
+    document.getElementById("postbox").insertAdjacentHTML("afterbegin", `<div class="pbt cl">
+    <div class="z"><span><input type="text" id="rj-number" style="min-width: " class="px" title="RJ号" placeholder="RJ号"/></span></div>
+    <div class="z"><span><input type="text" id="resolution" class="px" title="解析度，格式：96kHz/24bit 或 320kbps" placeholder="解析度，格式：96kHz/24bit（无损） 或 320kbps（有损）"/></span></div>
+    <div class="z"><span><input type="text" id="selfCertUrl" class="px" title="自购证明图片链接" placeholder="自购证明图片链接"/></span></div>
+    <button type="button" class="pn pnc" id="gen-post">生成</button></div>`);
     let rjBox = document.getElementById("rj-number");
     let resolutionBox = document.getElementById("resolution");
     let genPostButton = document.getElementById("gen-post");
     let postArea = document.getElementById("e_textarea");
     let titleBox = document.getElementById("subject");
+    let selfCertUrl = document.getElementById("selfCertUrl");
     let fid = new URLSearchParams(location.search).get("fid");
     let parser = new DOMParser();
     let keys = {
@@ -134,8 +144,8 @@ Rules of Reshare
                 if (noResolution) {
                     resolution = /(wav|flac|ape|tak)/i.test(fileFormat) ? "44.1kHz/16bit" : "320kbps";
                 }
-                //(rjCode, coverUrl, title, circle, cv, releaseDate, resolution, fileFormat, tags, fileSize, introduction, trackList)
-                postArea.value = bodyTemplate(rjBox.value, coverUrl, title, circle, cv, releaseDate.format("YYYY.MM.DD"), resolution, fileFormat, tags, fileSize, undefined, undefined);
+                //(rjCode, coverUrl, title, circle, cv, releaseDate, resolution, fileFormat, tags, fileSize, introduction, trackList, selfCertUrl)
+                postArea.value = bodyTemplate(rjBox.value, coverUrl, title, circle, cv, releaseDate.format("YYYY.MM.DD"), resolution, fileFormat, tags, fileSize, undefined, undefined, selfCertUrl.value);
                 //(rjCode, title, releaseDate, resolution, fileFormat)
                 titleBox.value = titleTemplate(rjBox.value, title, releaseDate.format("YYMMDD"), resolution, fileFormatSingle);
                 genPostButton.disabled = undefined;
