@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         天使动漫 ASMR 版发帖辅助
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
+// @version      0.1.2
 // @description  天使动漫 ASMR 版发帖辅助
 // @author       Aoba Xu
 // @match        https://www.tsdm39.net/forum.php?mod=post&action=newthread&fid=581
@@ -108,7 +108,7 @@ Rules of Reshare
         "zh-tw": "YYYY年MM月DD日"
     };
     genPostButton.addEventListener("click", () => {
-        if (! /RJ\d{6}/i.test(rjBox.value)) {
+        if (! /RJ\d{6,}/i.test(rjBox.value)) {
             alert("未输入 RJ 号！");
             return;
         }
