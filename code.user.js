@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         天使动漫 ASMR 版发帖辅助
 // @namespace    http://tampermonkey.net/
-// @version      0.2.0
+// @version      0.2.1
 // @description  天使动漫 ASMR 版发帖辅助
 // @author       Aoba Xu
 // @match        https://www.tsdm39.net/forum.php?mod=post&action=newthread&fid=581
@@ -75,13 +75,15 @@ ${Array.from(trackListElements).map((x, i) => "[*]" + (i + 1) + ". " + x.querySe
             x.classList.remove("work_parts");
             switch (x.className) {
                 case "type_text":
-                    return `[size=5]${x.querySelector(".work_parts_heading").innerText.trim()}[/size]\n${x.querySelector(".work_parts_area").innerText.trim()}`;
+                    return (x.querySelector(".work_parts_heading") ? `[size=5]${x.querySelector(".work_parts_heading").innerText.trim()}[/size]\n` : "")
+                        + `${x.querySelector(".work_parts_area").innerText.trim()}`;
                 case "type_image":
-                    return `[size=5]${x.querySelector(".work_parts_heading").innerText.trim()}[/size]
-[img]${x.querySelector(".work_parts_area.type_visual > .work_parts_multitype > .work_parts_multitype_item img").src}[/img]
+                    return (x.querySelector(".work_parts_heading") ? `[size=5]${x.querySelector(".work_parts_heading").innerText.trim()}[/size]\n` : "")
+                        + `[img]${x.querySelector(".work_parts_area.type_visual > .work_parts_multitype > .work_parts_multitype_item img").src}[/img]
 ${x.querySelector(".work_parts_area.type_visual > .work_parts_multitype > .work_parts_multitype_item.type_text").innerText.trim()}`;
                 case "type_multiimages":
-                    return `[size=5]${x.querySelector(".work_parts_heading").innerText.trim()}[/size]\n` + Array.from(x.querySelectorAll(".work_parts_multiimage_item")).map(x => `[img]${x.querySelector("img").src}[/img]\n${x.querySelector(".text").innerText.trim()}`).join("\n");
+                    return (x.querySelector(".work_parts_heading") ? `[size=5]${x.querySelector(".work_parts_heading").innerText.trim()}[/size]\n` : "")
+                        + Array.from(x.querySelectorAll(".work_parts_multiimage_item")).map(x => `[img]${x.querySelector("img").src}[/img]\n${x.querySelector(".text").innerText.trim()}`).join("\n");
                 default:
                     return undefined;
             }
