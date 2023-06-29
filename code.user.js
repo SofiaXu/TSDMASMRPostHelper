@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         天使动漫 ASMR 版发帖辅助
 // @namespace    http://tampermonkey.net/
-// @version      0.2.2
+// @version      0.2.3
 // @description  天使动漫 ASMR 版发帖辅助
 // @author       Aoba Xu
 // @match        https://www.tsdm39.com/forum.php?mod=post&action=newthread&fid=581
 // @match        https://www.tsdm39.com/forum.php?mod=post&action=newthread&fid=612
+// @match        https://tsdm39.com/forum.php?mod=post&action=newthread&fid=581
+// @match        https://tsdm39.com/forum.php?mod=post&action=newthread&fid=612
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tsdm39.net
 // @grant        GM_xmlhttpRequest
 // @connect      www.dlsite.com
